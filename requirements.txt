@@ -1,0 +1,9 @@
+ultralytics==8.1.0
+opencv-python
+numpy
+onnx
+onnxruntime
+torch
+torchvision
+tqdm
+pyyaml
