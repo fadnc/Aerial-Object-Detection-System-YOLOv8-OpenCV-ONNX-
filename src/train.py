@@ -5,8 +5,8 @@ def train():
     model = YOLO(MODEL_NAME)
     
     model.train(
-        data="data/dataset.yaml",
-        epoxh=EPOCHS,
+        data="coco128.yaml",
+        epochs=EPOCHS,
         imgsz=IMAGE_SIZE,
         batch=BATCH_SIZE,
         name="aerial_detector"
