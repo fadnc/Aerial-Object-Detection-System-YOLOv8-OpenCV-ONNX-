@@ -1,0 +1,10 @@
+MODEL_NAME = "yolov8n.pt"
+IAMGE_SIZE = 640
+BATCH_SIZE = 16
+EPOCHS = 30
+
+CONF_THRESHOLD = 0.4
+IOU_THRESHOLD = 0.5
+
+VIDEO_SOURCE = "input.mp4"
+ONNX_MODEL_PATH = "models/best.onnx"
