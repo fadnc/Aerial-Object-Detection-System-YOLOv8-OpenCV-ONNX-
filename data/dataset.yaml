@@ -1,0 +1,9 @@
+path: data
+train: images/train
+va: images/va
+
+names:
+  0: person
+  1: car
+  2: truck
+  3: bus
