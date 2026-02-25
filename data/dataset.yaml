@@ -1,6 +1,6 @@
 path: data
 train: images/train
-va: images/va
+val: images/val
 
 names:
   0: person
