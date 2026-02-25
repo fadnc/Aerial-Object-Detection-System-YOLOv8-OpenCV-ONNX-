@@ -9,8 +9,8 @@ def train():
         epochs=EPOCHS,
         imgsz=IMAGE_SIZE,
         batch=BATCH_SIZE,
+        workers=8,
         name="aerial_detector",
-        device=0
     )
     
 if __name__ == "__main__":
