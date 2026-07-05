@@ -210,3 +210,4 @@ yolo/
 data/
 models/
 output/
+.pt*
