@@ -1,8 +1,33 @@
 import argparse
+from pathlib import Path
 
+import yaml
 from ultralytics import YOLO
 
 import config
+
+
+def prepare_resolved_data_yaml(data_path: Path) -> Path:
+    """
+    Ultralytics resolves a relative 'path:' field in a dataset yaml against
+    its own global `datasets_dir` setting (see ~/Ultralytics/settings.yaml
+    or %APPDATA%\\Ultralytics\\settings.yaml on Windows) - NOT relative to
+    the yaml file's own location. That means our checked-in, portable
+    `path: data` can resolve to the wrong folder on any given machine
+    (e.g. "<project>/datasets/data" instead of "<project>/data").
+
+    To keep dataset.yaml itself relative/portable in git, write out a
+    sibling file with an absolute 'path' pointing at this project's actual
+    data/ folder, and train against that instead.
+    """
+    with open(data_path, "r") as f:
+        data = yaml.safe_load(f)
+    data["path"] = str(data_path.parent.resolve())
+
+    resolved_path = data_path.parent / "dataset.resolved.yaml"
+    with open(resolved_path, "w") as f:
+        yaml.dump(data, f, sort_keys=False)
+    return resolved_path
 
 
 def parse_args():
@@ -22,8 +47,10 @@ def train():
     args = parse_args()
     model = YOLO(args.model)
 
+    resolved_data = prepare_resolved_data_yaml(Path(args.data))
+
     results = model.train(
-        data=args.data,
+        data=str(resolved_data),
         epochs=args.epochs,
         imgsz=args.imgsz,
         batch=args.batch,
